@@ -6,10 +6,10 @@ Prerequisite: python3
 
 To install:
 
-pip3 install numpy
+    pip3 install numpy
 
-pip3 install matplotlib
+    pip3 install matplotlib
 
 To run:
 
-python3 ./app.py
+    python3 ./app.py
