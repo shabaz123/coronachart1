@@ -72,6 +72,13 @@ row_pak=179-2
 row_russia=189-2
 row_neth=171-2
 row_belgium=25-2
+row_bulgaria=32-2
+row_bosnia=29-2
+row_canadafirst=37-2
+row_canadalast=47-2
+row_serbia=196-2
+row_turkey=215-2
+row_romania=188-2
 
 # plot each country of interest
 do_plot(row_uk, 'UK')
@@ -91,6 +98,12 @@ do_plot(row_pak, 'Pakistan')
 do_plot(row_russia, 'Russia')
 do_plot(row_neth, 'Netherlands')
 do_plot(row_belgium, 'Belgium')
+do_plot(row_bulgaria, 'Bulgaria')
+do_plot(row_bosnia, 'Bosnia')
+do_plotsum(row_canadafirst, row_canadalast, 'Canada')
+do_plot(row_serbia, 'Serbia')
+do_plot(row_turkey, 'Turkey')
+do_plot(row_romania, 'Romania')
 
 # tweak and then finally display the plot
 plt.xlim(xmin=0)
