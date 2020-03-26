@@ -2,10 +2,12 @@
 # to install:
 # pip3 install numpy
 # pip3 install matplotlib
+# pip3 install requests
 # edit fname variable below
 # to run:
 # python3 ./app.py
 
+import requests
 import numpy as np
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
@@ -14,8 +16,11 @@ threshold=10
 
 # Download the file from https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases
 # Original wide form (new column for each day)
-# todo: replace with wget or similar to download the file automatically?
 fname='./time_series_covid19_deaths_global.csv'
+url='https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/'
+fdata = requests.get(url+fname)
+# write the file to the file system
+open(fname, 'wb').write(fdata.content)
 
 # this function is used to plot any row (country)
 def do_plot(row, name):
