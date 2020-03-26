@@ -3,7 +3,6 @@
 # pip3 install numpy
 # pip3 install matplotlib
 # pip3 install requests
-# edit fname variable below
 # to run:
 # python3 ./app.py
 
