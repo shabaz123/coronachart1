@@ -15,7 +15,7 @@ threshold=10
 # Download the file from https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases
 # Original wide form (new column for each day)
 # todo: replace with wget or similar to download the file automatically?
-fname='c:/c_root/covid/time_series_covid19_deaths_global.csv'
+fname='./time_series_covid19_deaths_global.csv'
 
 # this function is used to plot any row (country)
 def do_plot(row, name):
