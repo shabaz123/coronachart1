@@ -13,13 +13,19 @@ import matplotlib.pyplot as plt
 
 threshold=10
 
+# 0=deaths, 1=confirmed cases
+datatype=0
+
 # Download the file from https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases
 # Original wide form (new column for each day)
 fname='./time_series_covid19_deaths_global.csv'
+fname2='./time_series_covid19_confirmed_global.csv'
 url='https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/'
 fdata = requests.get(url+fname)
+fdata2 = requests.get(url+fname2)
 # write the file to the file system
 open(fname, 'wb').write(fdata.content)
+open(fname2, 'wb').write(fdata2.content)
 
 # this function is used to plot any row (country)
 def do_plot(row, name):
@@ -29,7 +35,7 @@ def do_plot(row, name):
     idx=tempthresh.size
     if (idx>1):
         plt.plot(tempthresh)
-        plt.text(idx-1, tempthresh[idx-1], name)
+        plt.text(idx-1, tempthresh[idx-1], name+'('+str(int(tempthresh[idx-1]))+')')
 
 # this function is used to plot summed-up rows
 # (needed for large countries with multiple regions, like China and Australia)
@@ -49,8 +55,10 @@ def do_plotsum(rowfirst, rowlast, name):
         plt.plot(tempthresh)
         plt.text(idx-1, tempthresh[idx-1], name)
 
-
-f = open(fname, "r")
+if datatype==0:
+    f = open(fname, "r")
+elif datatype==1:
+    f = open(fname2, "r")
 line=f.readline()
 tblcolnames=line.split(',')
 tbl=genfromtxt(f, delimiter=',', names=tblcolnames, usecols=np.arange(0,len(tblcolnames)))
@@ -83,6 +91,10 @@ row_canadalast=47-2
 row_serbia=196-2
 row_turkey=215-2
 row_romania=188-2
+row_centafrica=48-2
+row_southafrica=202-2
+row_greece=124-2
+row_sweden=207-2
 
 # plot each country of interest
 do_plot(row_uk, 'UK')
@@ -108,14 +120,32 @@ do_plotsum(row_canadafirst, row_canadalast, 'Canada')
 do_plot(row_serbia, 'Serbia')
 do_plot(row_turkey, 'Turkey')
 do_plot(row_romania, 'Romania')
+do_plot(row_centafrica, 'Central Africa')
+do_plot(row_southafrica, 'South Africa')
+do_plot(row_greece, 'Greece')
+do_plot(row_greece, 'Sweden')
 
 # tweak and then finally display the plot
 plt.xlim(xmin=0)
 plt.ylim(ymin=0)
+
+# set x ticks
+start, end = plt.xlim()
+plt.xticks(np.arange(start, end, 2))
+# set y ticks
+start, end = plt.ylim()
+plt.yticks(np.arange(start, end, 1000))
+
+
 plt.gca().set_prop_cycle(None)
 plt.grid()
-plt.title('Cumulative Deaths from Coronavirus')
-plt.xlabel('Number of days since 10th death')
-plt.ylabel('Cumulative number of deaths')
+if datatype==0:
+    plt.title('Cumulative Deaths from Coronavirus')
+    plt.xlabel('Number of days since '+str(threshold)+'th death')
+    plt.ylabel('Cumulative number of deaths')
+elif datatype==1:
+    plt.title('Cumulative Reported Cases from Coronavirus')
+    plt.xlabel('Number of days since '+str(threshold)+'th reported case')
+    plt.ylabel('Cumulative number of cases')
 plt.show()
 
